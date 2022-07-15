@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -21,5 +22,9 @@ func main() {
 	if err != nil {
 		log.Panic("Error parsing json story.")
 	}
-	fmt.Println(story)
+
+	handler := cyoa.NewHandler(story)
+
+	fmt.Println("Starting server on port :8080")
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
